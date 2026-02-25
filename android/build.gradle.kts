@@ -15,9 +15,7 @@ subprojects {
     val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
     project.layout.buildDirectory.value(newSubprojectBuildDir)
 }
-subprojects {
-    project.evaluationDependsOn(":app")
-}
+// removed automatic evaluationDependsOn(":app") to avoid premature :app configuration that requires Android SDK
 
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
