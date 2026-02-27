@@ -1,6 +1,6 @@
 // main.dart
 import 'package:flutter/material.dart';
-import 'package:property/house_project/view/details.dart'; // Start with the first page
+import 'package:property/screen/DetailPage.dart';
 
 void main() {
   runApp(const MyApp());

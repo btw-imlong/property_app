@@ -41,6 +41,17 @@
     For more details:
     * https://docs.flutter.dev/platform-integration/web/initialization
   -->
-  <script src="flutter_bootstrap.js" async></script>
+  <script src="flutter_bootstrap.js" async>
+    _flutter.loader.loadEntrypoint({
+  onEntrypointLoaded: function(engineInitializer) {
+    engineInitializer.initializeEngine({
+      useColorEmoji: true,
+      renderer: "html", // <--- Add this line
+    }).then(function(appRunner) {
+      appRunner.runApp();
+    });
+  }
+});
+  </script>
 </body>
 </html>
