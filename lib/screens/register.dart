@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:property/services/register.dart';
 import 'home.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -34,26 +35,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future<void> registerUser() async {
-    final url = Uri.parse(
-      "https://propertyrentalapi.onrender.com/api/auth/register",
-    );
-
-    final body = {
-      "fullname": fullnameController.text,
-      "username": usernameController.text,
-      "email": emailController.text,
-      "password": passwordController.text,
-      "phone": phoneController.text,
-    };
-
     try {
-      final response = await http.post(
-        url,
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode(body),
+      final result = await AuthService.register(
+        fullname: fullnameController.text,
+        username: usernameController.text,
+        email: emailController.text,
+        password: passwordController.text,
+        phone: phoneController.text,
       );
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
+      if (result["statusCode"] == 200 || result["statusCode"] == 201) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Registration successful!")),
         );
@@ -63,9 +54,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
           MaterialPageRoute(builder: (context) => const Home()),
         );
       } else {
-        final error = jsonDecode(response.body);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Error: ${error['message'] ?? 'Unknown'}")),
+          SnackBar(
+            content: Text("Error: ${result["data"]["message"] ?? "Unknown"}"),
+          ),
         );
       }
     } catch (e) {
