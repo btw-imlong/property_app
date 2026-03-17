@@ -126,14 +126,8 @@ class RatingPage extends StatelessWidget {
 
                   //button submit
                   const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          // Add your submission logic here
-                        },
-                      ),
+                  Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                     
                     ],
                   ),
                 ],
