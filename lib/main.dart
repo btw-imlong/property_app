@@ -1,6 +1,6 @@
-// main.dart
 import 'package:flutter/material.dart';
-import 'package:property/screen/DetailPage.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../screens/splash.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +13,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: DetailPage(), // Set this to your initial DetailPage
+      home: SplashScreen(), // start app with splash
+    );
+    MaterialApp(
+      theme: ThemeData(textTheme: GoogleFonts.notoSansKhmerTextTheme()),
     );
   }
 }

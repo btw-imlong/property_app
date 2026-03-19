@@ -12,10 +12,10 @@ class MoreDetail extends StatefulWidget {
 
 class MoreDetailState extends State<MoreDetail> {
   final List<String> images = [
-    'https://expertrealty.com.kh/new/wp-content/uploads/2019/11/WEB-36-4.jpg',
-    'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=500', // Bathroom
-    'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=500', // Bedroom
-    'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500', // Living room
+    '../assets/images/house.png',
+    'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=500',
+    'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=500',
+    'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500',
   ];
 
   late String activeImage;
@@ -39,18 +39,17 @@ class MoreDetailState extends State<MoreDetail> {
               child: Column(
                 children: [
                   const SizedBox(height: 30),
-                  // 1. Wrap the Big Image and the Back Button in a STACK
+
                   Stack(
                     children: [
-                      // THE BIG IMAGE
                       GestureDetector(
                         onTap: () => _openZoomView(context, activeImage),
                         child: Hero(
                           tag: 'main_img',
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(25),
-                            child: Image.network(
-                              'https://corsproxy.io/?$activeImage',
+                            child: Image.asset(
+                              '../assets/images/house.png', // your local image
                               height: 300,
                               width: double.infinity,
                               fit: BoxFit.cover,
@@ -59,10 +58,9 @@ class MoreDetailState extends State<MoreDetail> {
                         ),
                       ),
 
-                      // 2. THE BACK BUTTON (Now correctly positioned inside the Stack)
                       Positioned(
-                        top: 15, // Distance from top of the image
-                        left: 15, // Distance from left of the image
+                        top: 15,
+                        left: 15,
                         child: GestureDetector(
                           onTap: () => Navigator.pop(context),
                           child: Container(
@@ -90,16 +88,17 @@ class MoreDetailState extends State<MoreDetail> {
 
                   const SizedBox(height: 12),
 
-                  // ... (Your Thumbnails Row stays here)
-                  const SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ...images.map((url) {
+                  // ✅ FIX: keep your design, just make it scrollable
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: images.map((url) {
                         bool isActive = activeImage == url;
+
                         return GestureDetector(
                           onTap: () => setState(() => activeImage = url),
                           child: Container(
+                            margin: const EdgeInsets.only(right: 8),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               border: Border.all(
@@ -112,7 +111,7 @@ class MoreDetailState extends State<MoreDetail> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.network(
-                                'https://corsproxy.io/?$url',
+                                url,
                                 height: 60,
                                 width:
                                     (MediaQuery.of(context).size.width - 80) /
@@ -123,12 +122,13 @@ class MoreDetailState extends State<MoreDetail> {
                           ),
                         );
                       }).toList(),
-                    ],
+                    ),
                   ),
                 ],
               ),
             ),
-            //TEXT CONTENT UI
+
+            // TEXT CONTENT UI (UNCHANGED DESIGN)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Column(
@@ -139,6 +139,7 @@ class MoreDetailState extends State<MoreDetail> {
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
+
                   Row(
                     children: const [
                       Icon(Icons.location_on, size: 16, color: Colors.grey),
@@ -148,7 +149,9 @@ class MoreDetailState extends State<MoreDetail> {
                       ),
                     ],
                   ),
+
                   const SizedBox(height: 25),
+
                   const Text(
                     "luxury two bedroom for rent",
                     style: TextStyle(
@@ -158,16 +161,12 @@ class MoreDetailState extends State<MoreDetail> {
                     ),
                   ),
 
-                  // Add an emoji or a bullet point to the first two lines
                   _infoTile("🏠", "Type: two bedroom"),
                   _infoTile("🛋️", "Full Furniture"),
                   _infoTile("💰", "Rental price: 100/\$month"),
                   _infoTile("📍", "Location: Phnom Penh, Cambodia"),
                   _infoTile("📞", "Call us for more information"),
-                  _infoTile(
-                    "📱",
-                    "092879xxx Click to Call",
-                  ), // Added an icon here too
+                  _infoTile("📱", "092879xxx Click to Call"),
 
                   const SizedBox(height: 15),
                   _infoTile("👉", "WhatsApp: https://wa.me/85592879746"),
@@ -193,6 +192,7 @@ class MoreDetailState extends State<MoreDetail> {
           ),
           const SizedBox(width: 10),
 
+          // ✅ FIX: prevent overflow (design unchanged)
           Expanded(
             child: Text(
               text,

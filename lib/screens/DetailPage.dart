@@ -1,16 +1,16 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:property/screen/MoreDetail.dart';
+import 'package:property/model/property.dart';
+import '../screens/MoreDetail.dart';
 
 class DetailPage extends StatelessWidget {
-  const DetailPage({super.key});
+  const DetailPage({super.key, required Property property});
 
   @override
   Widget build(BuildContext context) {
     // We add a proxy prefix to bypass the Chrome CORS block
-    const String imageUrl =
-        'https://expertrealty.com.kh/new/wp-content/uploads/2019/11/WEB-36-4.jpg';
-    const String proxyUrl = 'https://corsproxy.io/?${imageUrl}';
+    const String imageUrl = '../assets/images/house.png';
+    const String proxyUrl = '${imageUrl}';
 
     return Scaffold(
       backgroundColor: Colors.white,
